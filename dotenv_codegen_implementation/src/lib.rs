@@ -11,11 +11,8 @@ use syn::Token;
 
 #[proc_macro_hack]
 pub fn dotenv(input: TokenStream) -> TokenStream {
-    if let Err(err) = dotenv::dotenv() {
-        panic!("Error loading .env file: {}", err);
-    }
+    dotenv::dotenv().ok();
 
-    // Either everything was fine, or we didn't find an .env file (which we ignore)
     expand_env(input)
 }
 
